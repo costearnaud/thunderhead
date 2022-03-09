@@ -43,28 +43,51 @@ const getTokenIS = async (body:string) => {
     })
     return res.data
   } catch (err) {
-    console.log('getTokenIS error : ' + err)
-    return (err)
+    console.log('getTokenIS error : ' + err);
+    return (err);
   }
 };
 
 //const token = getToken (payload);
-const tokenIS = getTokenIS (payloadIS);
-const ISToken = ref('');
+const tokenISPromise = getTokenIS (payloadIS);
 
-tokenIS.then((value) => {
-  ISToken.value = value.access_token;
+let tokenIS = '';
+tokenISPromise.then((value) => {
+  tokenIS = value.access_token;
+  console.log('Token IS : ', tokenIS);
 });
 
-console.log('Token IS : ', ISToken.value);
+const DataStore = 'IS_Priority_BTS_082021';
+const workspace = 'MjlwNTEz';
+const env = 'live';
+const urlDataStore = 'https://eu2.thunderhead.com/datastores/1.0.0/'+workspace+'/'+DataStore;
 
+// Delete one DataStore
+const deleteDataStore = async () => {
+  try {
+    const res = await axios.delete(urlDataStore, {
+      headers: {
+        'Authorization': 'Bearer '+tokenIS,
+        'content-type': 'application/x-www-form-urlencoded',
+        'Accept': '*/*'
+      }
+    })
+    return res.data
+  } catch (err) {
+    console.log('deleteDataStore error : ' + err)
+    return (err)
+  }
+};
+
+const deletePromise = deleteDataStore();
+deletePromise.then((value) => {
+  console.log('Retour delete : ', value);
+});
 
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
-
-  <p>{{ ISToken }}</p>
 
   <p>
     Recommended IDE setup :
