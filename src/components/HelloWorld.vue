@@ -11,7 +11,7 @@ const payload = {
   grant_type: "client_credentials",
   client_id: "pm3vo9fzp81benu54s71hksn",
   client_secret: "k4zweavfyQcMGaYw0oqog2iE",
-  account_id: "7213695"
+  account_id: "7211327"
 };
 
 // Request SFMC Token
