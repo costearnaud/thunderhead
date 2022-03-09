@@ -6,16 +6,17 @@ defineProps<{ msg: string }>();
 
 const count = ref(0);
 const urlSFMCToken = ref('https://mc4m3gyjn-56t5p2511h2mb76-xq.auth.marketingcloudapis.com/v2/token');
-
+const urlISToken = ref('https://eu2.thunderhead.com/one/oauth2token');
 const payload = {
   grant_type: "client_credentials",
   client_id: "pm3vo9fzp81benu54s71hksn",
   client_secret: "k4zweavfyQcMGaYw0oqog2iE",
-  account_id: "7211327"
+  account_id: "7213695"
 };
+const payloadIS = 'grant_type=client_credentials';
 
 // Request SFMC Token
-const getToken = async (body:{}) => {
+const getToken = async (body:object) => {
   try {
     const res = await axios.post(urlSFMCToken.value, body, {
       headers: {
@@ -30,8 +31,28 @@ const getToken = async (body:{}) => {
   }
 };
 
+// Request IS Token
+const getTokenIS = async (body:string) => {
+  try {
+    const res = await axios.post(urlISToken.value, body, {
+      headers: {
+        'Authorization': 'Basic ',
+        'content-type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      }
+    })
+    return res.data
+  } catch (err) {
+    console.log('getTokenIS error : ' + err)
+    return (err)
+  }
+};
+
 const token = getToken (payload);
+const tokenIS = getTokenIS (payloadIS);
+
 console.log(token);
+console.log(tokenIS);
 
 </script>
 
