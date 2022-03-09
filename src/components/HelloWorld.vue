@@ -1,9 +1,38 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
+import axios from 'axios';
 
-defineProps<{ msg: string }>()
+defineProps<{ msg: string }>();
 
-const count = ref(0)
+const count = ref(0);
+const urlSFMCToken = ref('https://mc4m3gyjn-56t5p2511h2mb76-xq.auth.marketingcloudapis.com/v2/token');
+
+const payload = {
+  grant_type: "client_credentials",
+  client_id: "pm3vo9fzp81benu54s71hksn",
+  client_secret: "k4zweavfyQcMGaYw0oqog2iE",
+  account_id: "7213695"
+};
+
+// Request SFMC Token
+const getToken = async (body:{}) => {
+  try {
+    const res = await axios.post(urlSFMCToken.value, body, {
+      headers: {
+        'content-type': 'text/json',
+        'Accept': '*/*'
+      }
+    })
+    return res.data
+  } catch (err) {
+    console.log('getToken error : ' + err)
+    return (err)
+  }
+};
+
+const token = getToken (payload);
+console.log(token);
+
 </script>
 
 <template>
