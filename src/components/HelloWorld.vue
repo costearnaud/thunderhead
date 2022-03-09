@@ -48,11 +48,16 @@ const getTokenIS = async (body:string) => {
   }
 };
 
-const token = getToken (payload);
+//const token = getToken (payload);
 const tokenIS = getTokenIS (payloadIS);
+const ISToken = ref('');
 
-console.log(token);
-console.log(tokenIS);
+tokenIS.then((value) => {
+  ISToken.value = value.access_token;
+});
+
+console.log('Token IS : ', ISToken.value);
+
 
 </script>
 
@@ -60,7 +65,7 @@ console.log(tokenIS);
   <h1>{{ msg }}</h1>
 
   <p>
-    Recommended IDE setup v2:
+    Recommended IDE setup ({{ ISToken }}):
     <a href="https://code.visualstudio.com/" target="_blank">VSCode</a>
     +
     <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
