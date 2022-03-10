@@ -50,11 +50,18 @@ const getTokenIS = async (body:string) => {
 
 //const token = getToken (payload);
 const tokenISPromise = getTokenIS (payloadIS);
+const tokenPromise = getToken(payload);
 
 let tokenIS = '';
 tokenISPromise.then((value) => {
   tokenIS = value.access_token;
   console.log('Token IS : ', tokenIS);
+});
+
+let token = '';
+tokenPromise.then((value) => {
+  token = value.access_token;
+  console.log('Token SFMC : ', token);
 });
 
 const DataStore = 'IS_Priority_BTS_082021';
