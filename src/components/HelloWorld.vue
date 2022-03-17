@@ -86,6 +86,28 @@ const deleteDataStore = async () => {
   }
 };
 
+// List IS DataStores
+const urlDataStores = 'https://eu2.thunderhead.com/datastores/1.0.0/'+workspace
+
+const dataStores = async () => {
+  try{
+    const res = await axios.get(urlDataStores, {
+      headers: {
+        'Authorization': 'Bearer '+tokenIS,
+      }
+    })
+    return res;
+  } catch (err) {
+    console.log('listDataStores error : ' + err);
+    return (err);
+  }
+};
+
+const listPromise = dataStores();
+listPromise.then((value) => {
+  console.log('Retour list : ', value);
+});
+
 const deletePromise = deleteDataStore();
 deletePromise.then((value) => {
   console.log('Retour delete : ', value);
